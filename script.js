@@ -5,6 +5,10 @@ function Gameboard () {
         ["", "", ""],
         ["", "", ""]
     ];
+    
+
+    // returning
+    return { board };
 
 
 
@@ -16,6 +20,17 @@ function Cell () {
 }
 
 
-// Define Player Object
-
 // Define Game Controller
+function GameController (PlayerOne="", PlayerTwo="") {
+    // Player Objects
+    const Players = [
+        {
+            name: "X",
+            token: "X"
+        }, 
+        {
+            name: "O",
+            token: "O"
+        }
+    ]
+}
