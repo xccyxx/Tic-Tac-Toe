@@ -34,7 +34,10 @@ function GameController () {
 
     // Check Tie
     const checkTie = (gameboard) => {
-        
+        // check if all cells are filled
+        if (gameboard.flat().every((cell) => cell !== "")) {
+            gameStatus = GameStatus.tie;
+        }
     }
 
     // Create 2 Players
@@ -54,17 +57,19 @@ function GameController () {
 
     // Keep the game going unless it has ended
     while (gameStatus === GameStatus.active) {
-            // prompt for move
+        // prompt for move
         const [ row, col ] = prompt("Move: ").split(", ")
         // update board
         Gameboard.updateBoard(row, col, currentPlayer.token);
         console.log(Gameboard.getBoard());
+        // Check Tie
+        checkTie(Gameboard.getBoard());
         // Switch Player
         console.log(currentPlayer);
         currentPlayer = switchTurn(currentPlayer);
         console.log(currentPlayer);
     }
-
+    console.log(gameStatus);
 }
 
 GameController ();
