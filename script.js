@@ -32,12 +32,6 @@ function GameController (gameboard) {
             return currentPlayer === Players[0] ? Players[1] : Players[0];
     }
 
-    // Check Tie
-    const checkTie = (gameboard) => {
-        // check if all cells are filled
-        return gameboard.flat().every(cell => cell !== "");
-    }
-
     const checkWinner = (gameboard, winningConditions, currentPlayer) => {
         // check if any condition is met
         const winningCondition = winningConditions.some(condition => {
@@ -45,6 +39,12 @@ function GameController (gameboard) {
         })
         // return the player object if found
         return winningCondition ? currentPlayer : null;
+    }
+
+    // Check Tie
+    const checkTie = (gameboard) => {
+        // check if all cells are filled
+        return gameboard.flat().every(cell => cell !== "");
     }
 
     const updateGameStatus = (hasWinner, isTie) => {
@@ -59,7 +59,7 @@ function GameController (gameboard) {
     }
 
     // get board variable
-    const getBoard = Gameboard.getBoard;
+    const getBoard = gameboard.getBoard;
 
     // Create 2 Players
     const Players = [ createPlayer("John", "X"), createPlayer("Mary", "O")];
@@ -89,15 +89,18 @@ function GameController (gameboard) {
         tie: "tie"
     };
 
-    //Set up game status variable for tracking
+    // Set up game status variable for tracking
     let gameStatus = GameStatus.active;
+
+    // Set up buttons event listener
+    const cells = wdocument.querySelectorAll(".cell");
 
     // Keep the game going unless it has ended
     while (gameStatus === GameStatus.active) {
         // prompt for move
         const [ row, col ] = prompt("Move: ").split(", ");
         // update board
-        Gameboard.updateBoard(row, col, currentPlayer.token);
+        gameboard.updateBoard(row, col, currentPlayer.token);
         console.log(getBoard);
         // Check Winner
         const winner = checkWinner(getBoard, winningConditions, currentPlayer);
@@ -114,3 +117,4 @@ function GameController (gameboard) {
     }
     console.log(gameStatus);
 } (Gameboard);
+
