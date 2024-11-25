@@ -27,6 +27,16 @@ function createPlayer (name, token) {
 
 // Game Controller
 function GameController (gameboard) {
+    // Update DOM
+    const updateCellTextContent = (target, isUpdated, token) => {
+        if (isUpdated) {
+            target.textContent = token;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Switch current player function
     const switchTurn = (currentPlayer) => {
             return currentPlayer === Players[0] ? Players[1] : Players[0];
@@ -59,7 +69,7 @@ function GameController (gameboard) {
     }
 
     // get board variable
-    const getBoard = gameboard.getBoard;
+    const getBoard = gameboard.getBoard();
 
     // Create 2 Players
     const Players = [ createPlayer("John", "X"), createPlayer("Mary", "O")];
@@ -93,28 +103,46 @@ function GameController (gameboard) {
     let gameStatus = GameStatus.active;
 
     // Set up buttons event listener
-    const cells = wdocument.querySelectorAll(".cell");
-
-    // Keep the game going unless it has ended
-    while (gameStatus === GameStatus.active) {
-        // prompt for move
-        const [ row, col ] = prompt("Move: ").split(", ");
-        // update board
-        gameboard.updateBoard(row, col, currentPlayer.token);
-        console.log(getBoard);
+    const handleClick = (e) => {
+        if (gameStatus !== "active") {
+            return;
+        }
+        const row = parseInt(e.target.dataset.row);
+        const col = parseInt(e.target.dataset.col);
+        // Update gameboard on backend
+        console.log(currentPlayer.token);
+        const isUpdated = gameboard.updateBoard(row, col, currentPlayer.token);
+        // Update Cell Value on frontend
+        updateCellTextContent(e.target, isUpdated, currentPlayer.token);
         // Check Winner
         const winner = checkWinner(getBoard, winningConditions, currentPlayer);
         // Check Tie
         const isTie = checkTie(getBoard);
         // Change Game Status if needed
         gameStatus = updateGameStatus(winner, isTie);
-        // Switch Player
-        console.log(currentPlayer);
-        if (gameStatus === GameStatus.active) {
+        // Switch Player if needed
+        if (gameStatus === GameStatus.active && isUpdated) {
             currentPlayer = switchTurn(currentPlayer);
         }
-        console.log(currentPlayer);
     }
-    console.log(gameStatus);
-} (Gameboard);
 
+    // Generate cells in gameboard
+    const generateCells = () => {
+        const board = document.querySelector(".gameboard");
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                const cell = document.createElement("button");
+                cell.setAttribute("data-row", i);
+                cell.setAttribute("data-col", j);
+                cell.textContent = "";
+                cell.addEventListener("click", (e) => {
+                    handleClick(e);
+                })
+                board.append(cell);
+            }
+        }
+    }
+    generateCells();
+};
+
+GameController(Gameboard);
