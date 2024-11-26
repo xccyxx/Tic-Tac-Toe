@@ -1,5 +1,11 @@
+:root {
+    --main-color: #effef7;
+    --gameboard-border: 4px #1e293b solid;
+    --gameboard-color: #f8fafc;
+}
+
 .container {
-    background-color: #effef7;
+    background-color: var(--main-color);
     height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr;
@@ -8,18 +14,36 @@
 
 .gameboard {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
+    background-color: var(--gameboard-color);
+    grid-template-rows: repeat(3, 150px);
+    grid-template-columns: repeat(3, 150px);
+    padding: 2rem;
+    border: #94a3b8 solid 2px;
+    border-radius: 24px;
 }
 
-button {
-    background-color: white;
-    border: #cbd5e1 1px solid;
-    aspect-ratio: 1;
-    width: 150px;
-    border-radius: 5px;
+.cell {
+    background-color: inherit;
+    border: none;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 50px;
+    font-size: 72px;
     font-weight: bold;
-}
+    border-right: var(--gameboard-border); /* Internal vertical borders */
+    border-bottom: var(--gameboard-border); /* Internal horizontal borders */
+  }
+  
+  .cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) {
+    border-right: none; /* Remove right border for last column cells */
+  }
+  
+  .cell:nth-child(7), .cell:nth-child(8), .cell:nth-child(9) {
+    border-bottom: none; /* Remove bottom border for last row cells */
+  }
+
+  .token-x {
+    color: #991b1b;
+  }
+
+  .token-o {
+    color: #166534;
+  }

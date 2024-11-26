@@ -31,6 +31,12 @@ function GameController (gameboard) {
     const updateCellTextContent = (target, isUpdated, token) => {
         if (isUpdated) {
             target.textContent = token;
+            if (token === "X") {
+                target.classList.add("token-x");
+            }
+            if (token === "O") {
+                target.classList.add("token-o");
+            }
             return true;
         } else {
             return false;
@@ -128,17 +134,18 @@ function GameController (gameboard) {
 
     // Generate cells in gameboard
     const generateCells = () => {
-        const board = document.querySelector(".gameboard");
+        const boardElement = document.querySelector(".gameboard");
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const cell = document.createElement("button");
                 cell.setAttribute("data-row", i);
                 cell.setAttribute("data-col", j);
+                cell.classList.add("cell");
                 cell.textContent = "";
                 cell.addEventListener("click", (e) => {
                     handleClick(e);
                 })
-                board.append(cell);
+                boardElement.append(cell);
             }
         }
     }
