@@ -17,15 +17,12 @@ const Gameboard = (function () {
         return false;
     }
 
-    // function for generating a list all coordinates of the board
+    // function for generating a list of all coordinates of the board
     const getCoordinates = () => {
         const coordinates = [];
         for (i = 0; i < board.length; i++) {
             for (j = 0; j < board[i].length; j++) {
-                const coordinate = [];
-                coordinate.push(i);
-                coordinate.push(j);
-                coordinates.push(coordinate);
+                coordinates.push([i, j]);
             }
         }
         return coordinates;
@@ -78,7 +75,6 @@ function GameController (gameboard) {
     }
 
     const updateGameStatus = (hasWinner, isTie) => {
-        console.log(hasWinner);
         if (hasWinner) {
             return GameStatus.end;
         } else if (isTie) {
@@ -130,7 +126,6 @@ function GameController (gameboard) {
         const row = parseInt(e.target.dataset.row);
         const col = parseInt(e.target.dataset.col);
         // Update gameboard on backend
-        console.log(currentPlayer.token);
         const isUpdated = gameboard.updateBoard(row, col, currentPlayer.token);
         // Update Cell Value on frontend
         updateCellTextContent(e.target, isUpdated, currentPlayer.token);

@@ -1,25 +1,50 @@
 :root {
     --main-color: #effef7;
     --gameboard-border: 4px #1e293b solid;
-    --gameboard-color: #f8fafc;
+    --gameboard-bg-color: #f8fafc;
+    --std-border-radius: 24px;
+    --btn-border: 2px #94a3b8 solid;
 }
 
 .container {
     background-color: var(--main-color);
-    height: 100vh;
+    height: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
-    place-items: center;
+    justify-items: center;
+}
+
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    column-gap: 2rem;
+    justify-items: center;
+}
+
+.player-one-info {
+    justify-self: right;
+    grid-row: 2 / 3;
+    grid-column: 1 / 2; 
+}
+
+.player-two-info {
+    justify-self: left;
+    grid-row: 2 / 3;
+    grid-column: -2 / -1; 
 }
 
 .gameboard {
+    grid-row: 1 / 6;
+    grid-column: 2 / 3;
     display: grid;
-    background-color: var(--gameboard-color);
+    background-color: var(--gameboard-bg-color);
     grid-template-rows: repeat(3, 150px);
     grid-template-columns: repeat(3, 150px);
     padding: 2rem;
     border: #94a3b8 solid 2px;
-    border-radius: 24px;
+    border-radius: var(--std-border-radius);
 }
 
 .cell {
@@ -38,6 +63,25 @@
   
   .cell:nth-child(7), .cell:nth-child(8), .cell:nth-child(9) {
     border-bottom: none; /* Remove bottom border for last row cells */
+  }
+
+  .last-row {
+    grid-row: -2 / -1;
+    grid-column: 2 / 3;
+    place-self: center;
+  }
+
+  .reset-btn {
+    height: 60px;
+    width: 120px;
+    background-color: var(--gameboard-bg-color);
+    border-radius: var(--std-border-radius);
+    border: var(--btn-border);
+  }
+
+  .reset-btn:hover {
+    background-color: #fcd34d;
+    transition-duration: 800ms;
   }
 
   .token-x {
