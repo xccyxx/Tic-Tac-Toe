@@ -16,8 +16,22 @@ const Gameboard = (function () {
         }
         return false;
     }
+
+    // function for generating a list all coordinates of the board
+    const getCoordinates = () => {
+        const coordinates = [];
+        for (i = 0; i < board.length; i++) {
+            for (j = 0; j < board[i].length; j++) {
+                const coordinate = [];
+                coordinate.push(i);
+                coordinate.push(j);
+                coordinates.push(coordinate);
+            }
+        }
+        return coordinates;
+    }
     
-    return { board, getBoard, updateBoard };
+    return { board, getBoard, updateBoard, getCoordinates };
 }) ();
 
 // Factory Function for Players
@@ -135,19 +149,18 @@ function GameController (gameboard) {
     // Generate cells in gameboard
     const generateCells = () => {
         const boardElement = document.querySelector(".gameboard");
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const cell = document.createElement("button");
-                cell.setAttribute("data-row", i);
-                cell.setAttribute("data-col", j);
-                cell.classList.add("cell");
-                cell.textContent = "";
-                cell.addEventListener("click", (e) => {
-                    handleClick(e);
-                })
-                boardElement.append(cell);
-            }
-        }
+        const coordinates = gameboard.getCoordinates();
+        coordinates.forEach(([row, col])=> {
+            const cell = document.createElement("button");
+            cell.setAttribute("data-row", row);
+            cell.setAttribute("data-col", col);
+            cell.classList.add("cell");
+            cell.textContent = "";
+            cell.addEventListener("click", (e) => {
+                handleClick(e);
+            })
+            boardElement.append(cell);
+        })
     }
     generateCells();
 };
