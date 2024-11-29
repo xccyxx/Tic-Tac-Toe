@@ -11,6 +11,7 @@ body {
 }
 
 .container {
+    font-family: "Roboto", sans-serif;
     background-color: var(--main-color);
     height: 100%;
     display: grid;
@@ -19,6 +20,7 @@ body {
 }
 
 .title {
+    font-family: "Righteous", sans-serif;
     grid-row: 1 / 2;
 }
 
@@ -29,6 +31,19 @@ body {
     grid-template-rows: 150px auto;
     column-gap: 2rem;
     justify-items: center;
+}
+
+.info-container > form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.confirm-btn {
+  flex: 0;
+  background-color: var(--gameboard-bg-color);
+  border-radius: var(--std-border-radius);
+  border: var(--btn-border);
 }
 
 .player-one-info {
