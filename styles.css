@@ -4,6 +4,7 @@
     --gameboard-bg-color: #f8fafc;
     --std-border-radius: 24px;
     --btn-border: 2px #94a3b8 solid;
+    --info-element-height: 40px;
 }
 
 body {
@@ -15,8 +16,9 @@ body {
     background-color: var(--main-color);
     height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: repeat(3, auto) 1fr;
     justify-items: center;
+    gap: 1rem;
 }
 
 .title {
@@ -36,11 +38,21 @@ body {
 .info-container > form {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
-.confirm-btn {
-  flex: 0;
+.info-container .name-field {
+  height: var(--info-element-height);
+  padding: 0 1rem;
+  border-radius: 8px;
+  border: var(--btn-border);
+}
+
+.info-container .confirm-btn {
+  height: var(--info-element-height);
+  width: 120px;  
   background-color: var(--gameboard-bg-color);
   border-radius: var(--std-border-radius);
   border: var(--btn-border);
@@ -59,7 +71,7 @@ body {
 }
 
 .gameboard {
-    grid-row: 1 / -1;
+    grid-row: 1 / 3;
     grid-column: 2 / 3;
     display: grid;
     background-color: var(--gameboard-bg-color);
