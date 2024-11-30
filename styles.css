@@ -35,7 +35,8 @@ body {
     justify-items: center;
 }
 
-.info-container > form {
+/* Input Container part */
+.input-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,14 +44,14 @@ body {
   gap: 1rem;
 }
 
-.info-container .name-field {
+.name-field {
   height: var(--info-element-height);
   padding: 0 1rem;
   border-radius: 8px;
   border: var(--btn-border);
 }
 
-.info-container .confirm-btn {
+.confirm-btn {
   height: var(--info-element-height);
   width: 120px;  
   background-color: var(--gameboard-bg-color);
@@ -69,6 +70,8 @@ body {
     grid-row: 2 / 3;
     grid-column: -2 / -1; 
 }
+
+/* Gameboard */
 
 .gameboard {
     grid-row: 1 / 3;

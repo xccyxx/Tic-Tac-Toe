@@ -84,40 +84,6 @@ function GameController (gameboard) {
         }
     }
 
-    // get board variable
-    const getBoard = gameboard.getBoard();
-
-    // Create 2 Players
-    const Players = [ createPlayer("John", "X"), createPlayer("Mary", "O")];
-
-    // Set up currentPlayer variable for tracking
-    let currentPlayer = Players[0];
-
-    // Winning conditions
-    const winningConditions = [
-        // horizontal
-        [[0, 0], [0, 1], [0, 2]],
-        [[1, 0], [1, 1], [1, 2]],
-        [[2, 0], [2, 1], [2, 2]],
-        // vertical
-        [[0, 0], [1, 0], [2, 0]],
-        [[0, 1], [1, 1], [2, 1]],
-        [[0, 2], [1, 2], [2, 2]],
-        // iagonals
-        [[0, 0], [1, 1], [2, 2]],
-        [[0, 2], [1, 1], [2, 0]]
-    ]
-
-    // Set up game status object for choices
-    const GameStatus = {
-        active: "active",
-        end: "end",
-        tie: "tie"
-    };
-
-    // Set up game status variable for tracking
-    let gameStatus = GameStatus.active;
-
     // Set up buttons event listener
     const handleClick = (e) => {
         if (gameStatus !== "active") {
@@ -141,6 +107,45 @@ function GameController (gameboard) {
         }
     }
 
+    // Display Player Names Function
+    const handleNameInput = (e) => {
+        const forms = document.querySelectorAll("form");
+    }
+
+    // get board variable
+    const getBoard = gameboard.getBoard();
+
+    // Create 2 Players
+    const Players = [ createPlayer("John", "X"), createPlayer("Mary", "O")];
+
+    // Set up currentPlayer variable for tracking
+    let currentPlayer = Players[0];
+
+    // Winning conditions
+    const winningConditions = [
+        // Horizontal
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
+        // Vertical
+        [[0, 0], [1, 0], [2, 0]],
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
+        // Diagonals
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]]
+    ]
+
+    // Set up game status object for choices
+    const GameStatus = {
+        active: "active",
+        end: "end",
+        tie: "tie"
+    };
+
+    // Set up game status variable for tracking
+    let gameStatus = GameStatus.active;
+
     // Generate cells in gameboard
     const generateCells = () => {
         const boardElement = document.querySelector(".gameboard");
@@ -158,6 +163,8 @@ function GameController (gameboard) {
         })
     }
     generateCells();
+
+
 };
 
 GameController(Gameboard);
