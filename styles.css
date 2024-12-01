@@ -59,16 +59,20 @@ body {
   border: var(--btn-border);
 }
 
-.player-one-info {
+.player-x-info {
     justify-self: right;
     grid-row: 2 / 3;
     grid-column: 1 / 2; 
 }
 
-.player-two-info {
+.player-o-info {
     justify-self: left;
     grid-row: 2 / 3;
     grid-column: -2 / -1; 
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .hidden {

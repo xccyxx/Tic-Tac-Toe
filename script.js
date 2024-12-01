@@ -109,11 +109,12 @@ function GameController (gameboard) {
 
     // Create Player Display helper function
     const createPlayerDisplay = (token, name) => {
-        const playerLabelElement = document.createElement("p");
-        const playerNameElement = document.createElement("p");
-        playerLabelElement.textContent = `Player ${token}:`;
-        playerNameElement.textContent = name;
-        return [ playerLabelElement, playerNameElement ];
+        const labelElement = document.createElement("p");
+        const nameElement = document.createElement("p");
+        labelElement.textContent = `Player ${token}:`;
+        nameElement.classList.add("bold");
+        nameElement.textContent = name;
+        return [ labelElement, nameElement ];
     }
 
     // Display Player Names Function
@@ -121,15 +122,16 @@ function GameController (gameboard) {
         const infoContainers = document.querySelectorAll(".info-container");
         infoContainers.forEach(infoContainer => {
             const inputSection = infoContainer.querySelector(".input-section");
+            const token = infoContainer.dataset.token.toUpperCase();
+
             inputSection.addEventListener("submit", (e) => {
                 e.preventDefault();
                 const playerName = inputSection.querySelector(".name-field").value.trim();
                 if (playerName) {
                     inputSection.classList.add("hidden");
                     const outputSection = infoContainer.querySelector(".output-section");
-                    const token = inputSection.dataset.token.toUpperCase();
-                    const [ playerLabelElement, playerNameElement ] = createPlayerDisplay(token, playerName);
-                    outputSection.append(playerLabelElement, playerNameElement);
+                    const [ labelElement, nameElement ] = createPlayerDisplay(token, playerName);
+                    outputSection.append(labelElement, nameElement);
                 }
             })
         })  
