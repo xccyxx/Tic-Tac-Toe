@@ -35,7 +35,7 @@ body {
     justify-items: center;
 }
 
-/* Input Container part */
+/* Input Section */
 .input-section {
   display: flex;
   flex-direction: column;
@@ -69,6 +69,16 @@ body {
     justify-self: left;
     grid-row: 2 / 3;
     grid-column: -2 / -1; 
+}
+
+.hidden {
+  display: none;
+}
+
+/* Output Section */
+
+.output-section {
+  font-size: 1.5rem;
 }
 
 /* Gameboard */

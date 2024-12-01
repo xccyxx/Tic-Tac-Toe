@@ -107,9 +107,32 @@ function GameController (gameboard) {
         }
     }
 
+    // Create Player Display helper function
+    const createPlayerDisplay = (token, name) => {
+        const playerLabelElement = document.createElement("p");
+        const playerNameElement = document.createElement("p");
+        playerLabelElement.textContent = `Player ${token}:`;
+        playerNameElement.textContent = name;
+        return [ playerLabelElement, playerNameElement ];
+    }
+
     // Display Player Names Function
-    const handleNameInput = (e) => {
-        const forms = document.querySelectorAll("form");
+    const handleNameInput = () => {
+        const infoContainers = document.querySelectorAll(".info-container");
+        infoContainers.forEach(infoContainer => {
+            const inputSection = infoContainer.querySelector(".input-section");
+            inputSection.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const playerName = inputSection.querySelector(".name-field").value.trim();
+                if (playerName) {
+                    inputSection.classList.add("hidden");
+                    const outputSection = infoContainer.querySelector(".output-section");
+                    const token = inputSection.dataset.token.toUpperCase();
+                    const [ playerLabelElement, playerNameElement ] = createPlayerDisplay(token, playerName);
+                    outputSection.append(playerLabelElement, playerNameElement);
+                }
+            })
+        })  
     }
 
     // get board variable
@@ -163,6 +186,7 @@ function GameController (gameboard) {
         })
     }
     generateCells();
+    handleNameInput();
 
 
 };
