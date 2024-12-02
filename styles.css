@@ -125,7 +125,7 @@ body {
     border-right: var(--gameboard-border); /* Internal vertical borders */
     border-bottom: var(--gameboard-border); /* Internal horizontal borders */
     color: transparent;
-    transition: color 0.2s ease-in-out; Smooth fade effect
+    transition: color 0.2s ease-in-out;
   }
   
   .cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) {
