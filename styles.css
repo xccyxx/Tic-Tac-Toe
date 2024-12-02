@@ -28,6 +28,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 3rem;
 }
 
 .title {
@@ -165,7 +166,7 @@ body {
   /* Last row */
 
   .last-row {
-    margin: 2rem;
+    margin: 1rem;
     grid-row: 4 / 5;
     place-self: center;
     display: flex;
@@ -176,7 +177,7 @@ body {
   }
 
   .result {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
   }
 
