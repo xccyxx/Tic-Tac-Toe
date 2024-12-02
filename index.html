@@ -16,26 +16,27 @@
     <div class="container">
         <h1 class="title">Tic-Tac-Toe</h1>
         <div class="main-content">
-            <div class="info-container player-x-info" data-token="x">
+            <div class="info-container player-x-info" data-token="X">
                 <form class="input-section">
                     <label for="play-x-name">Player X's name:</label>
-                    <input id="play-x-name" type="text" class="name-field">
+                    <input id="play-x-name" type="text" class="name-field" minlength="1" maxlength="30" required>
                     <button type="submit" class="confirm-btn">Confirm</button>
                 </form>
                 <div class="output-section"></div>
             </div>
             <div class="gameboard">
             </div>
-            <div class="info-container player-o-info" data-token="o">
+            <div class="info-container player-o-info" data-token="O">
                 <form class="input-section">
                     <label for="play-o-name">Player O's name:</label>
-                    <input id="play-o-name" type="text" class="name-field">
+                    <input id="play-o-name" type="text" class="name-field" minlength="1" maxlength="30" required>
                     <button type="submit" class="confirm-btn">Confirm</button>
                 </form>
                 <div class="output-section"></div>
             </div>
         </div>
         <div class="last-row">
+            <div class="announcement"></div>
             <button class="reset-btn">Reset</button>
         </div>
     </div>

@@ -20,8 +20,8 @@ const Gameboard = (function () {
     // function for generating a list of all coordinates of the board
     const getCoordinates = () => {
         const coordinates = [];
-        for (i = 0; i < board.length; i++) {
-            for (j = 0; j < board[i].length; j++) {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
                 coordinates.push([i, j]);
             }
         }
@@ -86,7 +86,9 @@ function GameController (gameboard) {
 
     // Set up buttons event listener
     const handleClick = (e) => {
-        if (gameStatus !== "active") {
+        const missingNames = getMissingNames();
+        alertMissingName(missingNames);
+        if (gameStatus !== "active" || missingNames.length > 0) {
             return;
         }
         const row = parseInt(e.target.dataset.row);
@@ -108,7 +110,7 @@ function GameController (gameboard) {
     }
 
     // Create Player Display helper function
-    const createPlayerDisplay = (token, name) => {
+    const createDisplayElements = (name, token) => {
         const labelElement = document.createElement("p");
         const nameElement = document.createElement("p");
         labelElement.textContent = `Player ${token}:`;
@@ -122,7 +124,7 @@ function GameController (gameboard) {
         const infoContainers = document.querySelectorAll(".info-container");
         infoContainers.forEach(infoContainer => {
             const inputSection = infoContainer.querySelector(".input-section");
-            const token = infoContainer.dataset.token.toUpperCase();
+            const token = infoContainer.dataset.token;
 
             inputSection.addEventListener("submit", (e) => {
                 e.preventDefault();
@@ -130,18 +132,59 @@ function GameController (gameboard) {
                 if (playerName) {
                     inputSection.classList.add("hidden");
                     const outputSection = infoContainer.querySelector(".output-section");
-                    const [ labelElement, nameElement ] = createPlayerDisplay(token, playerName);
+                    const [ labelElement, nameElement ] = createDisplayElements(playerName, token);
                     outputSection.append(labelElement, nameElement);
+                    inputSection.dataset.submitted = "true";
+                    // update the player's name based on the input
+                    const matchPlayer = Players.find(player => player.token === token);
+                    matchPlayer.name = playerName;
                 }
             })
         })  
+    }
+
+    // Check whether both names are inputted before start
+    const getMissingNames = () => {
+        const inputSections = document.querySelectorAll(".input-section");
+        return [...inputSections].filter(inputSection => inputSection.dataset.submitted !== "true");
+        
+    }
+
+    // Alert for inputting name
+    const alertMissingName = (missingNames) => {
+        missingNames.forEach(inputSection => {
+            if (!inputSection.querySelector(".alert")) {
+                const missingNameAlert = document.createElement("p");
+                const token = inputSection.parentElement.dataset.token;
+                missingNameAlert.classList.add("alert");
+                missingNameAlert.textContent = `Please enter Player ${token}'s name`;    
+                inputSection.append(missingNameAlert);
+            }
+        })
+    }
+
+    // Generate cells in gameboard
+    const generateCells = () => {
+        const boardElement = document.querySelector(".gameboard");
+        const coordinates = gameboard.getCoordinates();
+        coordinates.forEach(([row, col])=> {
+            const cell = document.createElement("button");
+            cell.setAttribute("data-row", row);
+            cell.setAttribute("data-col", col);
+            cell.classList.add("cell");
+            cell.textContent = "";
+            cell.addEventListener("click", (e) => {
+                handleClick(e);
+            })
+            boardElement.append(cell);
+        })
     }
 
     // get board variable
     const getBoard = gameboard.getBoard();
 
     // Create 2 Players
-    const Players = [ createPlayer("John", "X"), createPlayer("Mary", "O")];
+    const Players = [createPlayer("", "X"), createPlayer("", "O")];
 
     // Set up currentPlayer variable for tracking
     let currentPlayer = Players[0];
@@ -171,22 +214,6 @@ function GameController (gameboard) {
     // Set up game status variable for tracking
     let gameStatus = GameStatus.active;
 
-    // Generate cells in gameboard
-    const generateCells = () => {
-        const boardElement = document.querySelector(".gameboard");
-        const coordinates = gameboard.getCoordinates();
-        coordinates.forEach(([row, col])=> {
-            const cell = document.createElement("button");
-            cell.setAttribute("data-row", row);
-            cell.setAttribute("data-col", col);
-            cell.classList.add("cell");
-            cell.textContent = "";
-            cell.addEventListener("click", (e) => {
-                handleClick(e);
-            })
-            boardElement.append(cell);
-        })
-    }
     generateCells();
     handleNameInput();
 
