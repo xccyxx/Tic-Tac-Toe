@@ -103,6 +103,8 @@ function GameController (gameboard) {
         const isTie = checkTie(getBoard);
         // Change Game Status if needed
         gameStatus = updateGameStatus(winner, isTie);
+        // Announce the result if needed
+        announceResult(gameStatus, winner);
         // Switch Player if needed
         if (gameStatus === GameStatus.active && isUpdated) {
             currentPlayer = switchTurn(currentPlayer);
@@ -120,7 +122,7 @@ function GameController (gameboard) {
     }
 
     // Display Player Names Function
-    const handleNameInput = () => {
+    const initializePlayerNames = () => {
         const infoContainers = document.querySelectorAll(".info-container");
         infoContainers.forEach(infoContainer => {
             const inputSection = infoContainer.querySelector(".input-section");
@@ -134,7 +136,7 @@ function GameController (gameboard) {
                     const outputSection = infoContainer.querySelector(".output-section");
                     const [ labelElement, nameElement ] = createDisplayElements(playerName, token);
                     outputSection.append(labelElement, nameElement);
-                    inputSection.dataset.submitted = "true";
+                    inputSection.setAttribute("data-submitted", "true");
                     // update the player's name based on the input
                     const matchPlayer = Players.find(player => player.token === token);
                     matchPlayer.name = playerName;
@@ -180,6 +182,16 @@ function GameController (gameboard) {
         })
     }
 
+    // Announce game result
+    const announceResult = (status, winner) => {
+        const result = document.querySelector(".result");
+        if (status === GameStatus.end) {
+            result.textContent = `${winner.name} won!`;
+        } else if (status === GameStatus.tie) {
+            result.textContent = "The game is tied."
+        }
+    }
+
     // get board variable
     const getBoard = gameboard.getBoard();
 
@@ -214,10 +226,8 @@ function GameController (gameboard) {
     // Set up game status variable for tracking
     let gameStatus = GameStatus.active;
 
+    initializePlayerNames();
     generateCells();
-    handleNameInput();
-
-
 };
 
 GameController(Gameboard);

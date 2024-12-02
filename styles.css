@@ -5,6 +5,8 @@
     --std-border-radius: 24px;
     --btn-border: 2px #94a3b8 solid;
     --info-element-height: 40px;
+    --std-transition-time: 800ms;
+
 }
 
 body {
@@ -56,6 +58,13 @@ body {
   background-color: var(--gameboard-bg-color);
   border-radius: var(--std-border-radius);
   border: var(--btn-border);
+}
+
+.confirm-btn:hover {
+  background-color: #3b82f6;
+  color: white;
+  border-color: white;
+  transition-duration: var(--std-transition-time);
 }
 
 .player-x-info {
@@ -116,6 +125,11 @@ body {
     border-right: var(--gameboard-border); /* Internal vertical borders */
     border-bottom: var(--gameboard-border); /* Internal horizontal borders */
   }
+
+  .cell {
+    color: transparent;
+    transition: color 0.2s ease-in-out; /* Smooth fade effect */
+  }
   
   .cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) {
     border-right: none; /* Remove right border for last column cells */
@@ -125,10 +139,30 @@ body {
     border-bottom: none; /* Remove bottom border for last row cells */
   }
 
+  .token-x {
+    color: #991b1b;
+  }
+
+  .token-o {
+    color: #166534;
+  }
+
+  /* Last row */
+
   .last-row {
     margin: 2rem;
     grid-row: 4 / 5;
     place-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .result {
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 
   .reset-btn {
@@ -141,13 +175,5 @@ body {
 
   .reset-btn:hover {
     background-color: #fcd34d;
-    transition-duration: 800ms;
-  }
-
-  .token-x {
-    color: #991b1b;
-  }
-
-  .token-o {
-    color: #166534;
+    transition-duration: var(--std-transition-time);
   }
