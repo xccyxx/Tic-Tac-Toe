@@ -141,6 +141,18 @@ function GameController (gameboard) {
         })
     }
 
+    // initialize Start Btn
+    const initializeStartBtn = () => {
+        const startBtn = document.querySelector(".start-btn");
+        startBtn.addEventListener("click", (e) => {
+            const mainContent = document.querySelector(".main-content");
+            const lastRow = document.querySelector(".last-row");
+            mainContent.classList.add("visible");
+            lastRow.classList.add("visible");
+            e.target.remove();
+        })
+    }
+
     // Create Player Display helper function
     const createDisplayElements = (name, token) => {
         const labelElement = document.createElement("p");
@@ -218,9 +230,9 @@ function GameController (gameboard) {
     }
 
     // Set up  reset btn
-    const initializeResetBtn = () => {
-        const resetBtn = document.querySelector(".reset-btn");
-        resetBtn.addEventListener("click", () => {
+    const initializeRestartBtn = () => {
+        const restartBtn = document.querySelector(".restart-btn");
+        restartBtn.addEventListener("click", () => {
             // reset the board on back end
             gameboard.resetBoard();
             // reset the board on front end
@@ -230,7 +242,6 @@ function GameController (gameboard) {
             // reset 
             resetResult();
         });
-
     }
 
     // get board variable
@@ -267,9 +278,10 @@ function GameController (gameboard) {
     // Set up game status variable for tracking
     let gameStatus = GameStatus.active;
 
+    initializeStartBtn();
     initializePlayerNames();
     generateCells();
-    initializeResetBtn();
+    initializeRestartBtn();
 };
 
 GameController(Gameboard);

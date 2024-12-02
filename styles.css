@@ -22,9 +22,16 @@ body {
     justify-items: center;
 }
 
+.intro-section {
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .title {
     font-family: "Righteous", sans-serif;
-    grid-row: 1 / 2;
 }
 
 .main-content {
@@ -34,6 +41,17 @@ body {
     grid-template-rows: 150px auto;
     column-gap: 2rem;
     justify-items: center;
+}
+
+.main-content, .last-row {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s linear;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Input Section */
@@ -162,7 +180,7 @@ body {
     font-weight: bold;
   }
 
-  .reset-btn {
+  .start-btn, .restart-btn {
     height: 60px;
     width: 120px;
     background-color: var(--gameboard-bg-color);
@@ -170,7 +188,7 @@ body {
     border: var(--btn-border);
   }
 
-  .reset-btn:hover {
+  .start-btn:hover, .restart-btn:hover {
     background-color: #fcd34d;
     transition-duration: var(--std-transition-time);
   }
