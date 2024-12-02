@@ -8,6 +8,7 @@ const Gameboard = (function () {
     
     // function for getting board status
     const getBoard = () => board;
+
     // function for a player's move
     const updateBoard = (row, col, token) => {
         if (board[row][col] === "") {
@@ -27,8 +28,13 @@ const Gameboard = (function () {
         }
         return coordinates;
     }
+
+    // reset board function
+    const resetBoard = () => {
+        board.forEach(row => row.fill(""));
+    }
     
-    return { board, getBoard, updateBoard, getCoordinates };
+    return { board, getBoard, updateBoard, getCoordinates, resetBoard };
 }) ();
 
 // Factory Function for Players
@@ -39,7 +45,7 @@ function createPlayer (name, token) {
 // Game Controller
 function GameController (gameboard) {
     // Update DOM
-    const updateCellTextContent = (target, isUpdated, token) => {
+    const updateCellContent = (target, isUpdated, token) => {
         if (isUpdated) {
             target.textContent = token;
             if (token === "X") {
@@ -96,7 +102,7 @@ function GameController (gameboard) {
         // Update gameboard on backend
         const isUpdated = gameboard.updateBoard(row, col, currentPlayer.token);
         // Update Cell Value on frontend
-        updateCellTextContent(e.target, isUpdated, currentPlayer.token);
+        updateCellContent(e.target, isUpdated, currentPlayer.token);
         // Check Winner
         const winner = checkWinner(getBoard, winningConditions, currentPlayer);
         // Check Tie
@@ -109,6 +115,30 @@ function GameController (gameboard) {
         if (gameStatus === GameStatus.active && isUpdated) {
             currentPlayer = switchTurn(currentPlayer);
         }
+    }
+
+    // Generate cells in gameboard
+    const generateCells = () => {
+        const boardElement = document.querySelector(".gameboard");
+
+        // Clear board before the generation
+        while (boardElement.firstChild) {
+            boardElement.removeChild(boardElement.firstChild);
+        }
+
+        // Add cells
+        const coordinates = gameboard.getCoordinates();
+        coordinates.forEach(([row, col])=> {
+            const cell = document.createElement("button");
+            cell.setAttribute("data-row", row);
+            cell.setAttribute("data-col", col);
+            cell.classList.add("cell");
+            cell.textContent = "";
+            cell.addEventListener("click", (e) => {
+                handleClick(e);
+            })
+            boardElement.append(cell);
+        })
     }
 
     // Create Player Display helper function
@@ -165,23 +195,6 @@ function GameController (gameboard) {
         })
     }
 
-    // Generate cells in gameboard
-    const generateCells = () => {
-        const boardElement = document.querySelector(".gameboard");
-        const coordinates = gameboard.getCoordinates();
-        coordinates.forEach(([row, col])=> {
-            const cell = document.createElement("button");
-            cell.setAttribute("data-row", row);
-            cell.setAttribute("data-col", col);
-            cell.classList.add("cell");
-            cell.textContent = "";
-            cell.addEventListener("click", (e) => {
-                handleClick(e);
-            })
-            boardElement.append(cell);
-        })
-    }
-
     // Announce game result
     const announceResult = (status, winner) => {
         const result = document.querySelector(".result");
@@ -190,6 +203,34 @@ function GameController (gameboard) {
         } else if (status === GameStatus.tie) {
             result.textContent = "The game is tied."
         }
+    }
+
+    // Reset status and turn helper function
+    const resetStatusAndTurn = () => {
+        gameStatus = GameStatus.active;
+        currentPlayer = Players[0];
+    }
+
+    // Reset result element
+    const resetResult = () => {
+        const result = document.querySelector(".result");
+        result.textContent = "";
+    }
+
+    // Set up  reset btn
+    const initializeResetBtn = () => {
+        const resetBtn = document.querySelector(".reset-btn");
+        resetBtn.addEventListener("click", () => {
+            // reset the board on back end
+            gameboard.resetBoard();
+            // reset the board on front end
+            generateCells();
+            // reset status
+            resetStatusAndTurn();
+            // reset 
+            resetResult();
+        });
+
     }
 
     // get board variable
@@ -228,6 +269,7 @@ function GameController (gameboard) {
 
     initializePlayerNames();
     generateCells();
+    initializeResetBtn();
 };
 
 GameController(Gameboard);

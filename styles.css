@@ -124,11 +124,8 @@ body {
     font-weight: bold;
     border-right: var(--gameboard-border); /* Internal vertical borders */
     border-bottom: var(--gameboard-border); /* Internal horizontal borders */
-  }
-
-  .cell {
     color: transparent;
-    transition: color 0.2s ease-in-out; /* Smooth fade effect */
+    transition: color 0.2s ease-in-out; Smooth fade effect
   }
   
   .cell:nth-child(3), .cell:nth-child(6), .cell:nth-child(9) {
