@@ -207,13 +207,22 @@ function GameController (gameboard) {
         })
     }
 
+    // helper function for announceResult
+    const addResultAnimation = (element) => {
+        element.classList.add("show");
+    }
+
     // Announce game result
     const announceResult = (status, winner) => {
+        if (status === gameStatus.active) return;
         const result = document.querySelector(".result");
+
         if (status === GameStatus.end) {
             result.textContent = `${winner.name} won!`;
+            addResultAnimation(result);
         } else if (status === GameStatus.tie) {
-            result.textContent = "The game is tied."
+            result.textContent = "The game is tied.";
+            addResultAnimation(result);
         }
     }
 
@@ -227,6 +236,7 @@ function GameController (gameboard) {
     const resetResult = () => {
         const result = document.querySelector(".result");
         result.textContent = "";
+        result.classList.remove("show");
     }
 
     // Set up  reset btn
